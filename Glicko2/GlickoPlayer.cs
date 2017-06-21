@@ -18,6 +18,6 @@ namespace Glicko2
         public double Volatility { get; set; }
         public double GlickoRating { get { return (Rating - 1500) / glickoConversion; } }
         public double GlickoRatingDeviation { get { return RatingDeviation / glickoConversion; } }
-        public double GPhi { get { return 1 / Math.Sqrt(1 + (3 * Math.Pow(GlickoRatingDeviation, 2) / Math.Pow(Math.PI, 2))); } }
+        public double GPhi { get { return 1 / Math.Sqrt(1 + (3 * GlickoCalculator.Double(GlickoRatingDeviation) / GlickoCalculator.Double(Math.PI))); } }
     }
 }
