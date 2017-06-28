@@ -9,11 +9,11 @@ namespace Glicko2
         private static double ConvergenceTolerance = 0.000001;
         private static double glickoConversion = 173.7178;
 
-        public static GlickoPlayer CalculateRanking(GlickoPlayer competitor, List<GlickoOpponent> opponents)
+        public static GlickoPlayer CalculateRanking(GlickoPlayer competitor, List<GlickoOpponent> opponents, Double? useVolatility = null)
         {
             var variance = ComputeVariance(competitor, opponents);
 
-            var updatedVolatility = CalculateNewVolatility(competitor, opponents, variance);
+            var updatedVolatility = useVolatility ?? CalculateNewVolatility(competitor, opponents, variance);
             
             var preratingDeviation = CalculatePreRatingDeviation(competitor.GlickoRatingDeviation, updatedVolatility);
 
