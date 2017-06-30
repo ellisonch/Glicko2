@@ -37,7 +37,7 @@ namespace Glicko2
 
         private static double ConvertRatingToOriginal(double glickoRating)
         {
-            return (glickoConversion * glickoRating) + 1500;
+            return (glickoConversion * glickoRating) + GlickoPlayer.InitialRating;
         }
 
         private static double CalculateNewRatingDeviation(double preratingDeviation, double variance)

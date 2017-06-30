@@ -6,9 +6,17 @@ namespace Glicko2
     {
         private double glickoConversion = 173.7178;
 
-        public GlickoPlayer(double rating = 1500, double ratingDeviation = 350, double volatility = 0.06)
+		public static double InitialRating = 1500;
+		public static double InitialRD = 350;
+		public static double InitialVolatility = 0.06;
+
+		public GlickoPlayer(double? argRating = null, double? argRatingDeviation = null, double? argVolatility = null)
         {
-            Rating = rating;
+			double rating = argRating ?? InitialRating;
+			double ratingDeviation = argRatingDeviation ?? InitialRD;
+			double volatility = argVolatility ?? InitialVolatility;
+
+			Rating = rating;
             RatingDeviation = ratingDeviation;
             Volatility = volatility;
         }
@@ -16,7 +24,7 @@ namespace Glicko2
         public double Rating { get; set; }
         public double RatingDeviation { get; set; }
         public double Volatility { get; set; }
-        public double GlickoRating { get { return (Rating - 1500) / glickoConversion; } }
+        public double GlickoRating { get { return (Rating - InitialRating) / glickoConversion; } }
         public double GlickoRatingDeviation { get { return RatingDeviation / glickoConversion; } }
         public double GPhi { get { return 1 / Math.Sqrt(1 + (3 * GlickoCalculator.Double(GlickoRatingDeviation) / GlickoCalculator.Double(Math.PI))); } }
     }
