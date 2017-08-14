@@ -70,7 +70,7 @@ namespace Glicko2
             var A = VolatilityTransform(competitor.Volatility);
             var a = VolatilityTransform(competitor.Volatility);
 
-            var k = 1;
+            
             double B = 0.0;
 
             if (Double(rankingChange) > (Double(competitor.GlickoRatingDeviation) + variance))
@@ -79,16 +79,16 @@ namespace Glicko2
             }
 
             if (Double(rankingChange) <= (Double(competitor.GlickoRatingDeviation) + variance))
-            {                
-                var x = VolatilityTransform(competitor.Volatility) - (k * VolatilityChange); 
+            {
+				var k = 1;
+				double x;
 
-                while(VolatilityFunction(x, rankingChange, rankDeviation, variance, competitor.Volatility) < 0)
-                {
-                    k++;
-                }                
-            }
-
-            B = VolatilityTransform(competitor.Volatility) - (k * VolatilityChange);
+				do {
+					x = VolatilityTransform(competitor.Volatility) - (k * VolatilityChange);
+					k++;
+				} while (VolatilityFunction(x, rankingChange, rankDeviation, variance, competitor.Volatility) < 0);
+				B = x;
+			}
 
             var fA = VolatilityFunction(A, rankingChange, rankDeviation, variance, competitor.Volatility);
             var fB = VolatilityFunction(B, rankingChange, rankDeviation, variance, competitor.Volatility);
