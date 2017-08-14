@@ -84,19 +84,19 @@ namespace Glicko2
 				double x;
 
 				do {
-					x = VolatilityTransform(competitor.Volatility) - (k * VolatilityChange);
+					x = a - (k * VolatilityChange);
 					k++;
-				} while (VolatilityFunction(x, rankingChange, rankDeviation, variance, competitor.Volatility) < 0);
+				} while (VolatilityFunction(x, rankingChange, rankDeviation, variance, a) < 0);
 				B = x;
 			}
 
-            var fA = VolatilityFunction(A, rankingChange, rankDeviation, variance, competitor.Volatility);
-            var fB = VolatilityFunction(B, rankingChange, rankDeviation, variance, competitor.Volatility);
+            var fA = VolatilityFunction(A, rankingChange, rankDeviation, variance, a);
+            var fB = VolatilityFunction(B, rankingChange, rankDeviation, variance, a);
 
             while (Math.Abs(B - A) > ConvergenceTolerance)
             {
                 var C = A + ((A - B) * fA / (fB - fA));
-                var fC = VolatilityFunction(C, rankingChange, rankDeviation, variance, competitor.Volatility);
+                var fC = VolatilityFunction(C, rankingChange, rankDeviation, variance, a);
 
                 if ((fC * fB) < 0)
                 {
@@ -125,12 +125,15 @@ namespace Glicko2
 			return x * x;
 		}
 
-        private static double VolatilityFunction(double x, double rankingChange, double rankDeviation, double variance, double volatility)
+        private static double VolatilityFunction(double x, double rankingChange, double rankDeviation, double variance, double a)
         {
-            var leftNumerater = Math.Exp(x) * (Double(rankingChange) - Double(rankDeviation) - variance - Math.Exp(x));
-            var leftDenominator = 2 * Double(Double(rankDeviation) + variance + Math.Exp(x));
+			var exp = Math.Exp(x);
+			var drd = Double(rankDeviation);
 
-            var rightNumerater = x - VolatilityTransform(volatility);
+			var leftNumerater = exp * (Double(rankingChange) - drd - variance - exp);
+            var leftDenominator = 2 * Double(drd + variance + exp);
+
+            var rightNumerater = x - a;
             var rightDenomintor = Double(VolatilityChange);
 
             return (leftNumerater / leftDenominator - rightNumerater / rightDenomintor);
