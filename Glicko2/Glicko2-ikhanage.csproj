@@ -43,6 +43,7 @@
     <Compile Include="GlickoCalculator.cs" />
     <Compile Include="GlickoOpponent.cs" />
     <Compile Include="GlickoPlayer.cs" />
+    <Compile Include="OtherData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

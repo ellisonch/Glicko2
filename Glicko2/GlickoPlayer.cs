@@ -10,6 +10,8 @@ namespace Glicko2
 		public static double InitialRD = 350;
 		public static double InitialVolatility = 0.06;
 
+		public OtherData OtherData;
+
 		public GlickoPlayer(double? argRating = null, double? argRatingDeviation = null, double? argVolatility = null)
         {
 			double rating = argRating ?? InitialRating;
