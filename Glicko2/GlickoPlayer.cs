@@ -4,7 +4,7 @@ namespace Glicko2
 {
     public class GlickoPlayer
     {
-        private double glickoConversion = 173.7178;
+        private static readonly double glickoConversion = 173.7178;
 
 		public static double InitialRating = 1500;
 		public static double InitialRD = 350;
@@ -22,7 +22,7 @@ namespace Glicko2
             RatingDeviation = ratingDeviation;
             Volatility = volatility;
         }
-        public string Name { get; set; }
+        // public string Name { get; set; }
         public double Rating { get; set; }
         public double RatingDeviation { get; set; }
         public double Volatility { get; set; }
