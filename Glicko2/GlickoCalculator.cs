@@ -9,7 +9,7 @@ namespace Glicko2
         private static double ConvergenceTolerance = 0.000001;
         private static double glickoConversion = 173.7178;
 
-        public static GlickoPlayer CalculateRanking(GlickoPlayer competitor, List<GlickoOpponent> opponents, Double? useVolatility = null)
+        public static GlickoPlayer CalculateRanking(GlickoPlayer competitor, IList<GlickoOpponent> opponents, Double? useVolatility = null)
         {
             var variance = ComputeVariance(competitor, opponents);
 
@@ -45,7 +45,7 @@ namespace Glicko2
             return 1 / Math.Sqrt((1 / Double(preratingDeviation)) + (1 / variance));
         }
 
-        private static double CalculateNewRating(GlickoPlayer competitor, List<GlickoOpponent> opponents, double newRatingDeviation)
+        private static double CalculateNewRating(GlickoPlayer competitor, IList<GlickoOpponent> opponents, double newRatingDeviation)
         {
             var sum = 0.0;
 
@@ -62,7 +62,7 @@ namespace Glicko2
             return Math.Sqrt(Double(ratingDeviation) + Double(updatedVolatility));
         }
 
-        private static double CalculateNewVolatility(GlickoPlayer competitor, List<GlickoOpponent> opponents, double variance)
+        private static double CalculateNewVolatility(GlickoPlayer competitor, IList<GlickoOpponent> opponents, double variance)
         {
             var rankingChange = RatingImprovement(competitor, opponents, variance);
             var rankDeviation = competitor.GlickoRatingDeviation;            
@@ -139,7 +139,7 @@ namespace Glicko2
             return (leftNumerater / leftDenominator - rightNumerater / rightDenomintor);
         }
 
-        private static double RatingImprovement(GlickoPlayer competitor, List<GlickoOpponent> opponents, double variance)
+        private static double RatingImprovement(GlickoPlayer competitor, IList<GlickoOpponent> opponents, double variance)
         {
             double sum = 0;
 
@@ -151,7 +151,7 @@ namespace Glicko2
             return variance * sum;
         }
 
-        private static double ComputeVariance(GlickoPlayer competitor, List<GlickoOpponent> opponents)
+        private static double ComputeVariance(GlickoPlayer competitor, IList<GlickoOpponent> opponents)
         {
             double sum = 0;
             foreach (var opponent in opponents)
